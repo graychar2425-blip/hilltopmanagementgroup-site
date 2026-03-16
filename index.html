@@ -249,7 +249,7 @@
   .bleed-num {
     font-family: var(--serif); font-size: 3.5rem;
     font-weight: 300; line-height: 1; color: var(--red);
-    white-space: nowrap; min-width: 6rem;
+    white-space: nowrap; min-width: 9rem; flex-shrink: 0;
   }
   .bleed-desc {
     font-family: var(--sans); font-size: 0.9rem;
@@ -489,9 +489,12 @@
   .econ-line.fee .value { color: var(--muted); }
 
   /* Full economics table */
+  .econ-table-wrap {
+    overflow-x: auto; width: 100%;
+  }
   .econ-table {
     width: 100%; border-collapse: collapse; font-size: 0.8rem;
-    overflow-x: auto; display: block;
+    min-width: 640px;
   }
   .econ-table th {
     font-family: var(--mono); font-size: 0.58rem;
@@ -1105,8 +1108,9 @@
     </div>
 
     <!-- Full scale table -->
-    <div class="reveal" style="margin-top:3rem; overflow-x:auto;">
+    <div class="reveal" style="margin-top:3rem;">
       <div class="section-label" style="margin-bottom:1rem;">Net Economics Across All Scales</div>
+      <div class="econ-table-wrap">
       <table class="econ-table">
         <thead>
           <tr>
@@ -1128,6 +1132,7 @@
           <tr><td>$1B Platform</td><td>$200M</td><td>$300K</td><td>$7.86M</td><td>–$1.1M</td><td>$6.76M/yr</td><td class="net-gain">+$6.46M</td></tr>
         </tbody>
       </table>
+      </div>
       <p style="font-size:0.68rem;color:var(--muted);margin-top:0.75rem;">Idle capital assumed at 20% of vehicle size. HMG fees include 50bps annual asset management + 10bps throughput fee (annualized over 3 years). Simple annual income, no compounding.</p>
     </div>
   </div>
