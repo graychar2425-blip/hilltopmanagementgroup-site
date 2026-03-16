@@ -7,7 +7,7 @@
 <meta name="description" content="A disciplined treasury framework for private equity and real estate sponsors. Every dollar working. Every day. Built on Charles Schwab custody.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   /* ─── Variables ─────────────────────────────────────────────── */
   :root {
@@ -24,6 +24,7 @@
     --line:       rgba(184,170,154,0.4);
     --serif:      'Cormorant Garamond', Georgia, serif;
     --sans:       'Inter', system-ui, sans-serif;
+    --mono:       'IBM Plex Mono', 'Courier New', monospace;
   }
 
   /* ─── Reset ─────────────────────────────────────────────────── */
@@ -583,11 +584,17 @@
     transform-origin: 400px 350px;
     animation: fw-spin 22s linear infinite;
   }
-  @media (max-width: 900px) {
+  @media (max-width: 768px) {
+    .fw-svg { max-width: 100%; }
     .fw-cards { grid-template-columns: 1fr 1fr; }
+    .fw-card { border-right: none; border-bottom: 1px solid var(--line); }
+    .fw-card:nth-child(odd) { border-right: 1px solid var(--line); }
+    .fw-card:last-child, .fw-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
   }
-  @media (max-width: 600px) {
+  @media (max-width: 480px) {
     .fw-cards { grid-template-columns: 1fr; }
+    .fw-card { border-right: none !important; }
+    .fw-card:last-child { border-bottom: none; }
   }
 
   /* ─── Stat strip ─────────────────────────────────────────────── */
@@ -710,6 +717,137 @@
     font-size: 0.82rem !important; font-style: italic;
     border-left: 2px solid rgba(200,165,122,0.2);
     padding-left: 1rem;
+  }
+
+  /* ─── Yield Gap Calculator ───────────────────────────────────── */
+  #calculator { background: var(--plaster); border-top: 1px solid var(--line); }
+  .calc-card {
+    background: var(--charcoal);
+    border-radius: 24px;
+    padding: 3.5rem;
+    max-width: 860px;
+    margin: 0 auto;
+    box-shadow: 0 4px 40px rgba(47,42,38,0.12);
+  }
+  .calc-card .eyebrow { color: var(--oak); }
+  .calc-card .eyebrow::before { background: var(--oak); }
+  .calc-heading {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 300; line-height: 1.2;
+    color: var(--plaster); margin-bottom: 2.5rem;
+  }
+  .calc-heading em { font-style: italic; color: var(--oak); }
+  .calc-slider-row {
+    display: flex; align-items: center; gap: 1.25rem;
+    margin-bottom: 2.5rem; flex-wrap: wrap;
+  }
+  .calc-slider-label {
+    font-size: 0.68rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(245,241,234,0.45);
+    font-weight: 500; flex-shrink: 0;
+  }
+  #calc-slider {
+    flex: 1; min-width: 180px;
+    -webkit-appearance: none; appearance: none;
+    height: 3px; background: rgba(184,170,154,0.25);
+    border-radius: 999px; outline: none; cursor: pointer;
+  }
+  #calc-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%; background: var(--oak);
+    border: 2px solid var(--plaster);
+    cursor: pointer; box-shadow: 0 1px 6px rgba(0,0,0,0.3);
+  }
+  #calc-slider::-moz-range-thumb {
+    width: 18px; height: 18px;
+    border-radius: 50%; background: var(--oak);
+    border: 2px solid var(--plaster);
+    cursor: pointer; box-shadow: 0 1px 6px rgba(0,0,0,0.3);
+  }
+  .calc-manual-input {
+    width: 90px; flex-shrink: 0;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(184,170,154,0.25);
+    border-radius: 8px; padding: 0.5rem 0.75rem;
+    font-family: var(--mono); font-size: 0.9rem; font-weight: 500;
+    color: var(--plaster); text-align: right;
+    outline: none; transition: border-color 0.2s;
+  }
+  .calc-manual-input:focus { border-color: var(--oak); }
+  .calc-manual-suffix {
+    font-size: 0.72rem; color: rgba(245,241,234,0.4);
+    flex-shrink: 0; margin-left: -0.5rem;
+  }
+  .calc-columns {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem; margin-bottom: 1.5rem;
+  }
+  .calc-col {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(184,170,154,0.15);
+    border-radius: 14px; padding: 1.75rem;
+  }
+  .calc-col-label {
+    font-size: 0.62rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(245,241,234,0.35);
+    font-weight: 500; margin-bottom: 0.6rem;
+  }
+  .calc-col-title {
+    font-family: var(--serif); font-size: 1.05rem; font-weight: 400;
+    color: var(--plaster); margin-bottom: 1.25rem;
+  }
+  .calc-rate-tag {
+    font-size: 0.68rem; font-family: var(--mono);
+    color: rgba(184,170,154,0.55); margin-bottom: 0.75rem;
+  }
+  .calc-yield-val {
+    font-family: var(--mono); font-size: 1.65rem; font-weight: 500;
+    color: var(--plaster); line-height: 1;
+  }
+  .calc-col.hmg-col .calc-col-label { color: rgba(200,165,122,0.6); }
+  .calc-col.hmg-col .calc-col-title { color: var(--limestone); }
+  .calc-col.hmg-col .calc-yield-val { color: var(--oak); }
+  .calc-gap-row {
+    background: rgba(160,124,91,0.12);
+    border: 1px solid rgba(160,124,91,0.3);
+    border-radius: 14px; padding: 1.5rem 1.75rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;
+  }
+  .calc-gap-label {
+    font-size: 0.62rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(200,165,122,0.65);
+    font-weight: 500;
+  }
+  .calc-gap-val {
+    font-family: var(--mono); font-size: 2rem; font-weight: 500;
+    color: var(--oak); line-height: 1;
+  }
+  .calc-net-row {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(184,170,154,0.1);
+    border-radius: 14px; padding: 1.25rem 1.75rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap;
+  }
+  .calc-net-label {
+    font-size: 0.62rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(245,241,234,0.3);
+    font-weight: 500;
+  }
+  .calc-net-val {
+    font-family: var(--mono); font-size: 1.35rem; font-weight: 500;
+    color: rgba(245,241,234,0.7); line-height: 1;
+  }
+  .calc-disclaimer {
+    font-size: 0.65rem; color: rgba(245,241,234,0.25);
+    margin-top: 1.5rem; line-height: 1.6;
+  }
+  @media (max-width: 640px) {
+    .calc-card { padding: 2rem 1.5rem; }
+    .calc-columns { grid-template-columns: 1fr; }
   }
 
   /* ─── FAQ ────────────────────────────────────────────────────── */
@@ -1039,6 +1177,45 @@
   </div>
 </section>
 
+<!-- ─── Yield Gap Calculator ──────────────────────────────────────── -->
+<section id="calculator" class="section-pad">
+  <div class="container">
+    <div class="calc-card reveal">
+      <div class="eyebrow">Your Idle Capital</div>
+      <h2 class="calc-heading">What is your sweep account <em>actually costing you?</em></h2>
+      <div class="calc-slider-row">
+        <span class="calc-slider-label">Idle AUM</span>
+        <input type="range" id="calc-slider" min="5" max="500" value="50" step="1">
+        <input type="number" id="calc-input" class="calc-manual-input" min="5" max="500" value="50">
+        <span class="calc-manual-suffix">$M</span>
+      </div>
+      <div class="calc-columns">
+        <div class="calc-col sweep-col">
+          <div class="calc-col-label">Current State</div>
+          <div class="calc-col-title">Sweep Account</div>
+          <div class="calc-rate-tag">0.15% annual yield</div>
+          <div class="calc-yield-val" id="calc-sweep-val">$75,000</div>
+        </div>
+        <div class="calc-col hmg-col">
+          <div class="calc-col-label">With HMG Framework</div>
+          <div class="calc-col-title">HMG Framework</div>
+          <div class="calc-rate-tag">3.93% blended yield</div>
+          <div class="calc-yield-val" id="calc-hmg-val">$1,965,000</div>
+        </div>
+      </div>
+      <div class="calc-gap-row">
+        <span class="calc-gap-label">Annual Gap (gross)</span>
+        <span class="calc-gap-val" id="calc-gap-val">+$1,890,000</span>
+      </div>
+      <div class="calc-net-row">
+        <span class="calc-net-label">Net of HMG fees (est.)</span>
+        <span class="calc-net-val" id="calc-net-val">+$1,740,000</span>
+      </div>
+      <p class="calc-disclaimer">Illustrative only. Gross yield at 3.93% blended vs. 0.15% sweep. HMG fee: 50 bps on first $10M, 30 bps on next $40M, 20 bps above $50M. Actual results vary by structure and market conditions.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ─── Who It's For ──────────────────────────────────────────────── -->
 <section id="audience" class="section-pad">
   <div class="container">
@@ -1210,6 +1387,62 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Yield Gap Calculator
+  function calcHmgFee(aumM) {
+    const aum = aumM * 1e6;
+    let fee = 0;
+    if (aum <= 10e6) {
+      fee = aum * 0.005;
+    } else if (aum <= 50e6) {
+      fee = 10e6 * 0.005 + (aum - 10e6) * 0.003;
+    } else {
+      fee = 10e6 * 0.005 + 40e6 * 0.003 + (aum - 50e6) * 0.002;
+    }
+    return fee;
+  }
+  function fmtDollar(n) {
+    if (Math.abs(n) >= 1e6) return '$' + (n / 1e6).toFixed(2).replace(/\.?0+$/, '') + 'M';
+    if (Math.abs(n) >= 1e3) return '$' + Math.round(n).toLocaleString();
+    return '$' + Math.round(n).toLocaleString();
+  }
+  function updateCalc(aumM) {
+    aumM = Math.max(5, Math.min(500, aumM));
+    const aum = aumM * 1e6;
+    const sweep = aum * 0.0015;
+    const hmg = aum * 0.0393;
+    const gap = hmg - sweep;
+    const fee = calcHmgFee(aumM);
+    const net = gap - fee;
+    document.getElementById('calc-sweep-val').textContent = fmtDollar(sweep);
+    document.getElementById('calc-hmg-val').textContent = fmtDollar(hmg);
+    document.getElementById('calc-gap-val').textContent = '+' + fmtDollar(gap);
+    document.getElementById('calc-net-val').textContent = (net >= 0 ? '+' : '') + fmtDollar(net);
+  }
+  const calcSlider = document.getElementById('calc-slider');
+  const calcInput = document.getElementById('calc-input');
+  if (calcSlider && calcInput) {
+    calcSlider.addEventListener('input', function() {
+      calcInput.value = this.value;
+      updateCalc(parseFloat(this.value));
+    });
+    calcInput.addEventListener('input', function() {
+      const v = parseFloat(this.value);
+      if (!isNaN(v) && v >= 5 && v <= 500) {
+        calcSlider.value = v;
+        updateCalc(v);
+      }
+    });
+    calcInput.addEventListener('blur', function() {
+      let v = parseFloat(this.value);
+      if (isNaN(v)) v = 50;
+      v = Math.max(5, Math.min(500, v));
+      this.value = v;
+      calcSlider.value = v;
+      updateCalc(v);
+    });
+    updateCalc(50);
+  }
 
   // Animated stat counters
   const counterObserver = new IntersectionObserver((entries) => {
