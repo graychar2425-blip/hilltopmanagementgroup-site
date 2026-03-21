@@ -431,6 +431,19 @@
       background: var(--gold);
       flex-shrink: 0;
     }
+    .who-col--featured {
+      border-top: 3px solid var(--gold);
+      background: #fafaf8;
+    }
+    .who-col-footer {
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      color: var(--gold-muted);
+      text-transform: uppercase;
+    }
 
     /* 8. CTA */
     #cta {
@@ -472,6 +485,13 @@
       max-width: 700px;
       margin: 0 auto;
     }
+    .footnotes { max-width: 700px; margin: 0 auto 2rem; }
+    .footnote-item {
+      font-size: 0.6rem;
+      color: #444;
+      line-height: 1.9;
+    }
+    .cite { font-size: 0.55em; color: var(--gold-muted); vertical-align: super; }
 
     @media (max-width: 768px) {
       #hero { padding: 100px 24px 80px; }
@@ -545,16 +565,16 @@
     <div style="text-align:center;"><div class="gold-rule fade-up delay-1"></div></div>
     <div class="numbers-grid">
       <div class="stat-block fade-up delay-1">
-        <div class="stat-value" data-target="38" data-prefix="$" data-suffix="B+">$0B+</div>
-        <div class="stat-label">Estimated idle capital across US sponsor platforms</div>
+        <div class="stat-value" data-target="262" data-prefix="$" data-suffix="T" data-decimal="2">$0.00T</div>
+        <div class="stat-label">Global PE dry powder as of mid-2024 <sup class="cite">[1]</sup></div>
       </div>
       <div class="stat-block fade-up delay-2">
-        <div class="stat-value" data-target="373" data-prefix="" data-suffix="%" data-decimal="2">0.00%</div>
-        <div class="stat-label">Yield gap vs. standard bank sweep</div>
+        <div class="stat-value" data-target="386" data-prefix="" data-suffix="%" data-decimal="2">0.00%</div>
+        <div class="stat-label">Annual yield gap: gov. money market vs. bank sweep <sup class="cite">[3][4]</sup></div>
       </div>
       <div class="stat-block fade-up delay-2">
-        <div class="stat-value" data-target="186500" data-prefix="$" data-suffix="" data-format="currency">$0</div>
-        <div class="stat-label">Annual opportunity on $50M idle</div>
+        <div class="stat-value" data-target="1680000" data-prefix="$" data-suffix="" data-format="currency">$0</div>
+        <div class="stat-label">Net annual gain on $50M idle (net of 50bps fee) <sup class="cite">[3][4]</sup></div>
       </div>
       <div class="stat-block fade-up delay-3">
         <div class="stat-value" data-target="1" data-prefix="" data-suffix=" Day">0 Day</div>
@@ -583,24 +603,24 @@
           <tr>
             <td>Same-Day Liquidity</td>
             <td>Daily access</td>
-            <td class="rate-val">~3.70%</td>
+            <td class="rate-val">~4.20%</td>
           </tr>
           <tr>
             <td>Short-Term Positioning</td>
             <td>1–6 months</td>
-            <td class="rate-val">~3.80%</td>
+            <td class="rate-val">~4.35%</td>
           </tr>
           <tr>
             <td>Extended Duration</td>
             <td>6–12 months</td>
-            <td class="rate-val">~4.10%</td>
+            <td class="rate-val">~4.50%</td>
           </tr>
         </tbody>
       </table>
       <div class="sweep-compare">
         <span>Compared to</span>
-        <strong>0.15% typical bank sweep</strong>
-        <span style="color:var(--gold-muted);">— a gap worth closing.</span>
+        <strong>0.39% national average bank sweep rate</strong>
+        <span style="color:var(--gold-muted);">— a gap worth closing. <sup class="cite" style="color:var(--gold-muted);">[4]</sup></span>
       </div>
     </div>
   </div>
@@ -618,11 +638,12 @@
           <span class="calc-label-text">Fund AUM</span>
           <span class="calc-value-display" id="fund-display">$100M</span>
         </div>
-        <input type="range" id="fund-slider" min="10" max="2000" value="100" step="10" />
+        <input type="range" id="fund-slider" min="10" max="500" value="100" step="10" />
         <div class="calc-ticks">
-          <span>$10M</span><span>$500M</span><span>$1B</span><span>$2B</span>
+          <span>$10M</span><span>$100M</span><span>$250M</span><span>$500M</span>
         </div>
         <p style="font-size:0.82rem;color:var(--gray);line-height:1.7;margin-top:0.5rem;">Adjust the slider to reflect your total AUM. The calculator estimates idle capital at 20% of fund size — a conservative figure for most sponsor platforms.</p>
+        <p style="font-size:0.72rem;color:#555;margin-top:0.75rem;line-height:1.6;">Funds over $500M typically maintain in-house treasury capacity.</p>
         <p style="font-size:0.72rem;color:#444;margin-top:1.5rem;line-height:1.6;">All figures are estimates based on current market conditions. Past performance does not guarantee future results.</p>
       </div>
       <div class="calc-results">
@@ -642,7 +663,7 @@
           <span class="calc-row-label">Net Annual Gain with HMG</span>
           <span class="calc-row-value" id="net-gain">$646K</span>
         </div>
-        <p class="calc-note">Net of estimated 50bps management fee. Based on 3.73% yield gap and 20% idle capital assumption.</p>
+        <p class="calc-note">Net of estimated 50bps management fee. Based on 3.86% yield gap (gov. money market vs. FDIC national avg. sweep rate) and 20% idle capital assumption. <sup class="cite">[3][4]</sup></p>
       </div>
     </div>
   </div>
@@ -653,40 +674,35 @@
   <div class="container">
     <div class="label fade-up">Who We Serve</div>
     <div class="gold-rule left fade-up delay-1"></div>
-    <h2 class="who-headline fade-up delay-1">Built for the operators running serious capital.</h2>
+    <h2 class="who-headline fade-up delay-1">The same idle capital problem exists at every scale.</h2>
     <div class="who-cols">
-      <div class="who-col fade-up delay-1">
+      <div class="who-col who-col--featured fade-up delay-1">
         <div class="who-col-num">01</div>
-        <div class="who-col-title">PE Sponsors</div>
-        <div class="who-col-sub">$200M – $2B AUM</div>
-        <p class="who-col-desc">Established buyout and growth equity funds with dry powder, fund reserves, and recycle capital requiring institutional-grade cash management between deployment cycles.</p>
-        <ul>
-          <li>Uncalled capital management</li>
-          <li>Distribution float optimization</li>
-          <li>GP co-invest reserves</li>
-        </ul>
+        <div class="who-col-title">First-Time Sponsors &amp; Single-Project Vehicles</div>
+        <div class="who-col-sub">$10M – $100M &middot; SPVs, syndicates, single-asset deals</div>
+        <p class="who-col-desc">You don't need a fund to look institutional. Whether you're syndicating a single asset, raising a first SPV, or managing capital for a small group of investors — the same idle capital problem exists at your scale. A $10M SPV with $2M idle still generates $66K in net annual advantage. More importantly: your investors see a branded Charles Schwab portal with institutional reporting, not a spreadsheet in a shared folder.</p>
+        <div class="who-col-footer">Implementation: 3–4 weeks &nbsp;&middot;&nbsp; Net annual gain on $10M: +$66K</div>
       </div>
       <div class="who-col fade-up delay-2">
         <div class="who-col-num">02</div>
-        <div class="who-col-title">Real Estate Sponsors</div>
-        <div class="who-col-sub">Value-add · Development · Opportunistic</div>
-        <p class="who-col-desc">Development timelines and equity waterfalls create predictable cash accumulation windows. We build the framework around your deal calendar, not against it.</p>
-        <ul>
-          <li>Pre-close equity staging</li>
-          <li>Construction draw float</li>
-          <li>Disposition proceeds</li>
-        </ul>
+        <div class="who-col-title">Emerging Managers</div>
+        <div class="who-col-sub">$25M – $250M &middot; Fund I–II</div>
+        <p class="who-col-desc">Competing against established shops for LP allocations with limited track record. You can't win on performance alone yet — but you can win on infrastructure. A $100M Fund I with $20M idle generates $656K in net annual yield advantage. HMG gives you the institutional back-office story that closes the credibility gap.</p>
+        <div class="who-col-footer">Implementation: 4–8 weeks &nbsp;&middot;&nbsp; Net annual gain on $100M: +$656K</div>
       </div>
       <div class="who-col fade-up delay-3">
         <div class="who-col-num">03</div>
-        <div class="who-col-title">Emerging Managers</div>
-        <div class="who-col-sub">First-time institutional funds</div>
-        <p class="who-col-desc">First-time fund managers rarely have the infrastructure to manage fund-level cash with institutional discipline. We bring that infrastructure without requiring institutional scale.</p>
-        <ul>
-          <li>Fund I treasury setup</li>
-          <li>LP reporting alignment</li>
-          <li>Scalable framework</li>
-        </ul>
+        <div class="who-col-title">Mid-Market PE Sponsors</div>
+        <div class="who-col-sub">$200M – $2B &middot; Fund II–IV</div>
+        <p class="who-col-desc">The sweet spot where idle capital drag becomes material but in-house treasury operations aren't justified. A $500M fund loses $3.28M annually on unoptimized capital. That's not a rounding error — it's a line item your LPs should be asking about.</p>
+        <div class="who-col-footer">Implementation: 4–8 weeks with counsel &nbsp;&middot;&nbsp; Net annual gain on $500M: +$3.28M</div>
+      </div>
+      <div class="who-col fade-up delay-3">
+        <div class="who-col-num">04</div>
+        <div class="who-col-title">Real Estate Sponsors</div>
+        <div class="who-col-sub">Value-add &middot; Development &middot; Opportunistic</div>
+        <p class="who-col-desc">Value-add, development, and opportunistic strategies share a common cash flow pattern: significant capital sits idle between acquisitions, during entitlement periods, and between fund vintages. Whether you're a multifamily operator, an industrial developer, or a mixed-use sponsor — the gap exists and it compounds.</p>
+        <div class="who-col-footer">Same platform, same infrastructure — optimized for RE deployment cadence</div>
       </div>
     </div>
   </div>
@@ -707,12 +723,15 @@
     </div>
     <div class="footer-rule"></div>
     <div class="footer-gold-rule"></div>
+    <div class="footnotes">
+      <p class="footnote-item">[1] PitchBook Global Private Market Funds Dry Powder Dashboard, 2026</p>
+      <p class="footnote-item">[2] Carta Fund Deployment Report, Q2 2024; Bain Global Private Equity Report, 2025</p>
+      <p class="footnote-item">[3] Crane Data Money Fund Index, March 2026. Indicative only; actual yields vary.</p>
+      <p class="footnote-item">[4] FDIC National Rate Survey, March 2026; Crane Data Sweep Rate Tracker</p>
+      <p class="footnote-item">[5] Bloomberg; Financial Times, 2025</p>
+    </div>
     <p class="disclaimer">
-      Hilltop Management Group is a registered investment adviser. Registration does not imply a certain level of skill or training.
-      All investment strategies involve risk, including potential loss of principal. The yield figures shown are approximate and based
-      on current market conditions — they are subject to change and do not represent a guarantee of future results. This website is
-      for informational purposes only and does not constitute investment advice. Please review our Form ADV for a complete description
-      of our services, fees, and risks.
+      This website is for informational purposes only and does not constitute an offer to sell or a solicitation of an offer to buy any securities. All yield and rate information is indicative and based on prevailing market conditions as of March 2026. Past performance does not guarantee future results. Investment involves risk including possible loss of principal. Hilltop Management Group is not a registered investment adviser. Treasury management services are provided through an SEC-registered RIA partner operating under a fiduciary standard. FDIC insurance applies to eligible deposit placements through IntraFi Network Deposits, subject to applicable limits.
     </p>
   </div>
 </section>
@@ -776,7 +795,7 @@
   function updateCalc() {
     const aum  = parseFloat(slider.value) * 1e6;
     const idle = aum * 0.20;
-    const bleed = idle * 0.0373;
+    const bleed = idle * 0.0386;
     const pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
     slider.style.setProperty('--pct', pct + '%');
     fundDisp.textContent = slider.value >= 1000
